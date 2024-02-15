@@ -1,0 +1,30 @@
+/* YearCalendar.css */
+
+.no-highlight {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
+.react-calendar__tile {
+    border-radius: 50%; /* Make the tiles round */
+  }
+
+.highlighted {
+    background-color: #ffc107; /* Yellow background color */
+    color: #fff; /* White text color */
+  }
+  
+  /* Optionally, you can define styles for other states, such as hover or active */
+  .highlighted:hover {
+    background-color: #ffca28; /* Lighter yellow background color on hover */
+  }
+  
+  .highlighted:active {
+    background-color: #ffa000; /* Darker yellow background color on active state */
+  }
+
+.YearCalendar {
+    border-radius: 10px;
+    height: 250px;
+  }
+  

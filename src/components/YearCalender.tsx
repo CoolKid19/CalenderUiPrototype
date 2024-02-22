@@ -1,56 +1,88 @@
 import { Dayjs } from 'dayjs';
-import React from 'react';
+import React, { useContext } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './YearCalender.css'
+import {RegionHolidaysContext} from '../context/RegionHolidayContext'
 
-const YearCalendar: React.FC<{year: Dayjs | null; month: string}> = (props) => {
-    const date =  props.year; 
-    const year = "" + date?.year()
 
-    const month = new Date(Number(year), Number(props.month)-1, 1);
-    const monthName = month.toLocaleString('default', { month: 'long' });
-    
-    const h1 = new Date(Number(year), Number(props.month)-1, 18);
-    const h2 = new Date(Number(year), Number(props.month)-1, 9);
-    const h3 = new Date(Number(year), Number(props.month)-1, 27);
-    const Holidays = [h1, h2, h3]
-    
-    const tileClassName = ({ date }: { date: Date }) => {
-      
-        if (date.getMonth() === month.getMonth() && date.getFullYear() === month.getFullYear() && date.getDate() === month.getDate()) {
-            
-            return 'no-highlight';
-        }
 
-        for (const holiday of Holidays) {
-          if (date.getMonth() === holiday.getMonth() && date.getFullYear() === holiday.getFullYear() && date.getDate() === holiday.getDate()) {
-              return 'highlighted';
-          }
+interface YearCalendarProps {
+  year: string;
+  month: string;
+  region: string;
+}
+
+const YearCalendar: React.FC<YearCalendarProps> = (props) => {
+
+  const regionHoliday = useContext(RegionHolidaysContext);
+  
+  const { year, month, region } = props;
+
+  const monthDate = new Date(Number(year), Number(month) - 1, 1);
+  const monthName = monthDate.toLocaleString('default', { month: 'long' });
+
+  // const h1 = new Date(Number(year), Number(month) - 1, 18);
+  // const h2 = new Date(Number(year), Number(month) - 1, 9);
+  // const h3 = new Date(Number(year), Number(month) - 1, 27);
+  let holidays : Date[] = [];
+
+  for(const obj of regionHoliday.regionHoliday){
+    const {Region, Holidays} = obj;
+    if(Region === region){
+      holidays = Holidays;
+      console.log(holidays)
+      break;
+    }
+  }
+
+
+  const tileClassName = ({ date, view }: { date: Date; view: string }) => {
+    let currClass = "";
+
+    if (view === 'month') {
+      currClass += 'custom-month-label';
+    }
+
+    if (date.getDay() === 0 || date.getDay() === 6) {
+      currClass = "weekend";
+    }
+
+    if (date.getMonth() === monthDate.getMonth() && date.getFullYear() === monthDate.getFullYear() && date.getDate() === monthDate.getDate()) {
+      currClass += ' no-highlight';
+      return currClass;
+    }
+
+    for (const holiday of holidays) {
+      if (date.getMonth() === holiday.getMonth() && date.getFullYear() === holiday.getFullYear() && date.getDate() === holiday.getDate()) {
+        currClass += ' highlighted';
+        break;
       }
-     
-        return '';
-    };
+    }
 
+    return currClass.trim();
+  };
 
   return (
-    <>
-         <h2>{monthName} {year}</h2>
-    {/* <div style={{ display: 'flex' }} > */}
-          <Calendar
-            value={month}
-            nextLabel={null} // Hides the next month navigation button
-            prevLabel={null} // Hides the previous month navigation button
-            next2Label={null} // Hides the next year navigation button
-            prev2Label={null} // Hides the previous year navigation button
-            showNavigation={false} // Hides the entire navigation
-            showNeighboringMonth={false} // Hides days from neighboring months
-            tileClassName={tileClassName} // Apply custom class names to tiles
-            className="YearCalendar"
-          />
-    {/* </div> */}
-    </>
+    <div className="calendar-container" >
+      <div className="calender-NavigationPanel">
+        <h4>{monthName} {year}</h4>
+      </div>
+      <Calendar
+        value={monthDate}
+        showNavigation={false}
+        tileClassName={tileClassName}
+        className="YearCalendar"
+        calendarType="hebrew"
+        showNeighboringMonth={false}
+        formatShortWeekday={(locale, date) => {
+          const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+          return days[date.getDay()];
+        }}
+      />
+    </div>
   );
 };
 
 export default YearCalendar;
+

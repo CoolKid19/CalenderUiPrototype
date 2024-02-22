@@ -11,7 +11,7 @@ const DatePickerOpenTo: React.FC<{value: Dayjs | null; setValue: (updatedValue: 
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['DatePicker', 'DatePicker']}>
         <DatePicker 
-        label={'"year"'} 
+        
         openTo="year" 
         
         views={['year']}

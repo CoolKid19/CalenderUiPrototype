@@ -16,6 +16,7 @@ const Sidebar: React.FC<{ setIsDrawerOpen: (state: boolean) => void; isDrawerOpe
         anchor='left'
         open={props.isDrawerOpen}
         onClose={() => props.setIsDrawerOpen(false)}
+        
     >
         <Box p={2} width = '75px' textAlign= "center" role = "presentation" >
 

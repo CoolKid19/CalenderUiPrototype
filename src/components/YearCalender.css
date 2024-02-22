@@ -12,8 +12,18 @@
     height: 30px; /* Set the height of the tiles */
   }
 
-.highlighted {
+.highlighted-0 {
     background-color: #ffc107; /* Yellow background color */
+    color: #fff; /* White text color */
+  }
+
+  .highlighted-1 {
+    background-color: #24ff07; /* Yellow background color */
+    color: #fff; /* White text color */
+  }
+
+  .highlighted-2 {
+    background-color: #ff0707; /* Yellow background color */
     color: #fff; /* White text color */
   }
   

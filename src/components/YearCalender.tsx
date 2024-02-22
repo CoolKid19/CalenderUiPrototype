@@ -25,7 +25,11 @@ const YearCalendar: React.FC<YearCalendarProps> = (props) => {
   // const h1 = new Date(Number(year), Number(month) - 1, 18);
   // const h2 = new Date(Number(year), Number(month) - 1, 9);
   // const h3 = new Date(Number(year), Number(month) - 1, 27);
-  let holidays : Date[] = [];
+  let holidays : {
+    holidayDate: Date,
+    type: string
+  
+  } [] = [];
 
   for(const obj of regionHoliday.regionHoliday){
     const {Region, Holidays} = obj;
@@ -54,8 +58,15 @@ const YearCalendar: React.FC<YearCalendarProps> = (props) => {
     }
 
     for (const holiday of holidays) {
-      if (date.getMonth() === holiday.getMonth() && date.getFullYear() === holiday.getFullYear() && date.getDate() === holiday.getDate()) {
-        currClass += ' highlighted';
+      const {holidayDate, type} = holiday
+      if (date.getMonth() === holidayDate.getMonth() && date.getFullYear() ===holidayDate.getFullYear() && date.getDate() === holidayDate.getDate()) {
+        if(type === '0'){
+          currClass += ' highlighted-0';
+        }else if(type === '1'){
+          currClass += ' highlighted-1';
+        }else{
+          currClass += ' highlighted-2';
+        }
         break;
       }
     }

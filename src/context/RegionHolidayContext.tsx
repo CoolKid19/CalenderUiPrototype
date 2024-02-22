@@ -3,10 +3,15 @@ import { Dispatch, SetStateAction, createContext, useState, ReactNode } from "re
 
 export type RegionHolidays = {
         Region: string
-        Holidays: Date[];
+        Holidays: {
+          holidayDate
+: Date,
+          type: string
+        
+        } [];
     }[];
 
-
+// dummy data for testing
 
 const d1 = new Date(2024, 1, 14);
   const d2 = new Date(2024, 1, 21);
@@ -18,6 +23,8 @@ const d1 = new Date(2024, 1, 14);
   const d8 = new Date(2024, 1, 17);
   const d9 = new Date(2024, 1, 24);
 
+//////////////////////////////////////////
+
 export interface RegionHolidayContextInterface {
     regionHoliday: RegionHolidays,
     setRegionHoliday: Dispatch<SetStateAction<RegionHolidays>>
@@ -27,19 +34,19 @@ const defaultState = {
     regionHoliday:[
         {
             Region: 'North',
-            Holidays: [d1, d2, d3] 
+            Holidays: [{holidayDate: d1, type: '0'}, {holidayDate: d2, type: '1'}, {holidayDate: d3, type: '2'}] 
         },
         {
             Region: 'South',
-            Holidays: [d3, d4]
+            Holidays: [{holidayDate: d3, type: '0'}, {holidayDate: d4, type: '1'}]
         },
         {
             Region: 'East',
-            Holidays: [d5, d6, d9] 
+            Holidays: [{holidayDate: d5, type: '0'}, {holidayDate: d6, type: '1'}, {holidayDate: d9, type: '2'}] 
         },
         {
             Region: 'West',
-            Holidays: [d7, d8] 
+            Holidays: [{holidayDate: d7, type: '0'}, {holidayDate: d8, type: '1'}] 
         }
     ],
     setRegionHoliday: (regionHoliday: RegionHolidays) => {}
@@ -57,19 +64,19 @@ export default function RegionHolidaysProvider({children}: RegionHolidaysProvide
     const [regionHoliday, setRegionHoliday] = useState<RegionHolidays>([
         {
             Region: 'North',
-            Holidays: [d1, d2, d3] 
+            Holidays: [{holidayDate: d1, type: '0'}, {holidayDate: d2, type: '1'}, {holidayDate: d3, type: '2'}] 
         },
         {
             Region: 'South',
-            Holidays: [d3, d4]
+            Holidays: [{holidayDate: d3, type: '0'}, {holidayDate: d4, type: '1'}]
         },
         {
             Region: 'East',
-            Holidays: [d5, d6, d9] 
+            Holidays: [{holidayDate: d5, type: '0'}, {holidayDate: d6, type: '1'}, {holidayDate: d9, type: '2'}] 
         },
         {
             Region: 'West',
-            Holidays: [d7, d8] 
+            Holidays: [{holidayDate: d7, type: '0'}, {holidayDate: d8, type: '1'}] 
         }
     ])
     return (
